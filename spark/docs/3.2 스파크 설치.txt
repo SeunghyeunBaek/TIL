@@ -1,0 +1,82 @@
+[터미널 모드 변환]
+su root
+vi /etc/inittab
+
+5를 3으로 변경
+:wq
+reboot
+
+[고정아이피 설정]
+$ vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+DEVICE=eth0
+HWADDR=080027443CC0
+TYPE=ethernet
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=192.168.56.101
+NETMASK=255.255.255.0
+GATEWAY=192.168.56.1
+NETWORK=192.168.56.0
+
+$ vi /etc/udev/rules.d/70-persistent-net.rules
+모두 주석처리
+
+재부팅
+
+$ service network restart
+$ ifconfig eth0
+
+[호스트변경]
+$ vi /etc/sysconfig/network
+HOSTNAME=server01.spark.com
+reboot
+
+$ vi /etc/hosts
+192.168.56.101	server01.spark.com
+
+[ssh 패키지 설치]
+$ yum install openssh*
+$ service sshd restart
+$ chkconfig sshd on
+$ reboot
+
+$ service network restart
+
+[윈도우 host 파일 수정]
+C:\Windows\System32\drivers\etc
+
+192.168.56.101	server01.spark.com
+
+
+[Java 설치]
+http://java.sun.com
+
+$ sudo rpm -ivh /tmp/jdk-8u201-linux-x64.rpm
+
+$ export JAVA_HOME=/usr/java/default
+$ export PATH="$JAVA_HOME"/bin:"$PATH"
+$ source /etc/profile
+$ java -version
+
+[스파크 설치]
+http://spark.apache.org
+
+$ sudo tar zxvf /tmp/spark-1.6.0-bin-hadoop2.6.tgz -C /opt/
+$ cd /opt
+$ sudo ln -s spark-1.6.0-bin-hadoop2.6 spark
+
+$ vi ~/.bashrc
+$ export SPARK_HOME=/opt/spark
+$ source ~/.bashrc
+
+$ cd /root
+
+$ vi .bash_profile
+$SPARK_HOME/bin 추가
+
+$ source .bash_profile
+
+$ spark-submit --version
+
+$ spark-submit --class org.apache.spark.examples.SparkPi ${SPARK_HOME}/lib/spark-examples-1.6.0-hadoop2.6.0.jar 10

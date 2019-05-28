@@ -1,0 +1,27 @@
+[ sbt 설치 ]
+https://www.scala-sbt.org/
+https://dl.bintray.com/sbt/native-packages/sbt/0.13.9/
+
+$ sudo tar zxvf /tmp/sbt-0.13.9.tgz -C /opt/
+
+
+$ vi ~/.bashrc
+$ export SBT_HOME=/opt/sbt
+$ source ~/.bashrc
+
+$ vi ~/.bash_profile
+$SBT_HOME/bin 추가
+$ source ~/.bash_profile
+
+$  
+
+[예시 프로젝트 만들기]
+cd ~
+mkdir spark-simple-app
+cd spark-simple-app
+mkdir -p src/main/scala
+mkdir project
+
+cd ~/spark-simple-app
+mkdir -p src/main/scala/com/example/chapter4
+cd src/main/scala/com/example/chapter4

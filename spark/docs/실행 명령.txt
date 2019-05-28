@@ -1,0 +1,13 @@
+spark-submit --master local 
+             --class 패키지명.클래스명
+             --name 프로젝트명
+             패키징된 jar파일 경로
+
+
+spark-submit --master local 
+             --class com.test.spark.ProductSales
+             --name ProductSales
+	     target/scala-2.10/ProductSales-assembly-0.1.jar
+
+
+spark-submit --master local --class com.test.spark.ProductSales --name ProductSales target/scala-2.10/ProductSales-assembly-0.1.jar
