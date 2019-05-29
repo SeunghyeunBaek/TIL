@@ -4,35 +4,35 @@
 * request : `localhost:5000`/address
 * reponse : index, lotto
 
+`reder_template` : html 반환, 변수를 전달할 수 있음
+
+`@app.route('/option')` : url로 option을 받으면 다음 함수를 실행
+
 ```python
-from flask import Flask
-import random
-
-app = Flask(__name__)
-
-
-# 주소창에 '/'가 있으면 index를 실행한다.
-@app.route('/')
-def index():
-    return '노동왕 워킹'
-
-# 주소창에 'lotto'가 있으면 lotto를 실행한다.
-@app.route('/lotto')
-def lotto():
-    lucky_nums = random.sample(range(1, 46), 6)
-    return f'노동왕 워킹 : {lucky_nums}'
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# 랜덤 로또 번호 출력
+@app.route('/pick_lotto')
+def pick_lotto():
+    lucky_numbers = lotto_package.get_unlucky_numbers()
+    return render_template('./pick_lotto.html', lucky_numbers=lucky_numbers)  # html에 변수 넘기기
 
 ```
 
+`{{var}}` :  .py에서 변수 받기
+
 ```html
-html for돌리기
-<u1>
-    {% for num in lucky_numbers %} 
-    <li>{{num}}</li>
+
+<table>
+    <tr>
+        <th style="text-align:center">번호</th>
+        <th style="text-align:center">너의 희망</th>
+        <th style="text-align:center">적나라한 현실</th>
+    </tr>
+    {% for idx, unlucky_number, win_number in zip_numbers %}
+    <tr>
+        <td style="text-align:center">{{idx}}번</td>
+        <td style="text-align:center">{{unlucky_number}}</td>
+        <td style="text-align:center">{{win_number}}</td>
+    </tr>
     {% endfor %}
-</u1>
 ```
 

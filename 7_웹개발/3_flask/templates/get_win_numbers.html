@@ -12,21 +12,28 @@
         }
     </style>
 </head>
+
 <body>
 <h1>노동왕 워킹 : 일해라</h1>
 <h2>회차 : {{round_number}}, 운명의 날 : {{round_date}}</h2>
 <h3>너의 등수 ㅎㅎ : {{rank}}</h3>
 <h3>몇개 맞췄나 : {{count}}, 보너스 맞췄나 : {{bonus_count}}</h3>
 
+{% if rank == 1 %}
+<h3>1등 당첨금</h3>
+{% endif %}
+
 <table>
     <tr>
-        <th>너의 희망</th>
-        <th>적나라한 현실</th>
+        <th style="text-align:center">번호</th>
+        <th style="text-align:center">너의 희망</th>
+        <th style="text-align:center">적나라한 현실</th>
     </tr>
-    {% for unlucky_number, win_number in zip_numbers %}
+    {% for idx, unlucky_number, win_number in zip_numbers %}
     <tr>
-        <td>{{unlucky_number}}</td>
-        <td>{{win_number}}</td>
+        <td style="text-align:center">{{idx}}번</td>
+        <td style="text-align:center">{{unlucky_number}}</td>
+        <td style="text-align:center">{{win_number}}</td>
     </tr>
     {% endfor %}
 </table>
