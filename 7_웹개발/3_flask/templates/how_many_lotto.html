@@ -9,11 +9,14 @@
 <h2>회차 : {{round_number}}, 운명의 날 : {{round_date}}</h2>
 <h3>1등이 당첨될때 까지 로또를 산 횟수 : {{destiny_count}}</h3>
 <h3>네가 쏟은 자금 : {{wasted_money}}</h3>
+
 <h3>너무 좋다</h3>
 <ol>
     {% for win in win_count %}
+    <ol>몇등 했나</ol>
     <li>{{win}} 번</li>
     {% endfor %}
+    <li>언랭 : {{destiny_count-win.sum()}}</li>
 </ol>
 
 </body>
