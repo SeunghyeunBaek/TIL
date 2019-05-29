@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>얼마나 삶을 낭비할텐가</title>
+</head>
+<body>
+<h1>얼마나 삶을 낭비할텐가</h1>
+<h2>회차 : {{round_number}}, 운명의 날 : {{round_date}}</h2>
+<h3>1등이 당첨될때 까지 로또를 산 횟수 : {{destiny_count}}</h3>
+<h3>네가 쏟은 자금 : {{wasted_money}}</h3>
+<h3>너무 좋다</h3>
+<ol>
+    {% for win in win_count %}
+    <li>{{win}} 번</li>
+    {% endfor %}
+</ol>
+
+</body>
+</html>

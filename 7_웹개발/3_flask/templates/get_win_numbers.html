@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>현실</title>
+</head>
+<body>
+<h1>노동왕 워킹 : 일해라</h1>
+<h2>회차 : {{round_number}}, 운명의 날 : {{round_date}}</h2>
+<h3>너의 등수 ㅎㅎ : {{rank}}</h3>
+<h3>몇개 맞췄나 : {{count}}, 보너스 맞췄나 : {{bonus_count}}</h3>
+<h4>너의 희망</h4>
+<ul>
+    {% for unlucky_number in unlucky_numbers %}
+    <li>{{unlucky_number}}</li>
+    {% endfor %}
+</ul>
+<h4>적나라한 현실</h4>
+<ul>
+    {% for win_number in win_numbers %}
+    <li>{{win_number}}</li>
+    {% endfor %}
+    <li>bonus number : {{bonus_number}}</li>
+</ul>
+</body>
+</html>
