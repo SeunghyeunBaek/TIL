@@ -4,7 +4,7 @@
 * request : `localhost:5000`/address
 * reponse : index, lotto
 
-`reder_template` : html 반환, 변수를 전달할 수 있음
+`render_template` : html 반환, 변수를 전달할 수 있음, html은 templates 폴더 안에 있어야함.
 
 `@app.route('/option')` : url로 option을 받으면 다음 함수를 실행
 
