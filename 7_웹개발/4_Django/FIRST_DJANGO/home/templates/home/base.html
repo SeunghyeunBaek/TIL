@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li><a href="/home/">index</a></li>
+        <li><a href="/home/contact/">contact</a></li>
+        <li><a href="/home/help_me/">help_me</a></li>
+    </ul>
+</nav>
+{% block body %}
+{% endblock %}
+<footer>
+    <p><em>삼멀캠해피해킹</em></p>
+</footer>
+</body>
+</html>
