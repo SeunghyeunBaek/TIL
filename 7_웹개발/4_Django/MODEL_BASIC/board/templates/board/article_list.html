@@ -1,0 +1,24 @@
+{% extends 'board/base.html' %}
+
+{% block title %} Article List {% endblock %}
+
+{% block body %}
+
+    <h1> Article list </h1>
+
+    <div>
+        <a href="/board/article_create/" onclick="return confirm('리얼쓸것인가?')">
+            <button>
+                글을 써라
+            </button>
+        </a>
+    </div>
+
+    <br><br><br>
+
+    {% for article in articles %}
+        <h2><a href="{{ article.id }}/">No.{{ article.id }} : {{ article.title }}</a></h2>
+        <hr>
+    {% endfor %}
+
+{% endblock %}

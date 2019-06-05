@@ -1,7 +1,8 @@
 from django.db import models
 
 
-class Article(models.Model):
+class Article(models.Model):  # MTV (Model, Template, View)
+    # id = Primary key
     title = models.CharField(max_length=200)
     content = models.TextField()
 

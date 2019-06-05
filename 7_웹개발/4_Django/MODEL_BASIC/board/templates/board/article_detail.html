@@ -1,0 +1,23 @@
+{% extends 'board/base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %}
+
+    <h1>{{ article_selected.title }}</h1>
+    <p>{{ article_selected.content }}</p>
+
+    <a href="/board/article_delete/{{ article_selected.id }}/" onclick="return confirm('리얼삭제함?')">
+        <button> 삭제 </button>
+    </a>
+
+    <a href="/board/article_edit/{{ article_selected.id }}">
+        <button> 수정 </button>
+    </a>
+
+    <a href="/board/">
+        <button>글 목록</button>
+    </a>
+
+
+{% endblock %}
