@@ -1,0 +1,29 @@
+{% extends 'articles/base.html' %}
+
+{% block title %} 인덱스 {% endblock %}
+
+{% block body %}
+<h1>게시글 목록</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">본문</th>
+        <th scope="col">기능</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+    <tr>
+        <th scope="row">{{article.id}}</th>
+        <td>{{article.title|truncatewords:10}}</td>
+        <td >{{article.content|truncatewords:10}}</td>
+        <td>
+            <a href="{% url 'articles:detail' article.id %}" class="btn btn-outline-primary">본문</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

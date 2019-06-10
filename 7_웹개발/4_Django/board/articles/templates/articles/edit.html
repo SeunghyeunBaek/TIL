@@ -1,0 +1,20 @@
+{% extends 'articles/base.html' %}
+
+{% block title %} New Article {% endblock %}
+
+{% block body %}
+<!--new article form-->
+<form action="{% url 'articles:update' article_selected.id %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="title">제목</label>
+        <input value="{{article_selected.title}}" type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="form-group">
+        <label for="content">본문</label>
+        <textarea class="form-control" id="content" rows="10" name="content" placeholder="본문을 쓰라">{{article_selected.content}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">저장하기</button>
+    <a href="{% url 'articles:detail' article_selected.id %}" class="btn btn-outline-secondary">취소</a>
+</form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'articles/base.html' %}
+
+{% block title %} new article {% endblock %}
+
+{% block body %}
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control"
+                   id="title" placeholder="Title" name="title"
+                   value={{article_selected.title}}>
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" id="content" rows="5" placeholder="Content" name="content">
+                {{article_selected.content}}
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'articles/base.html' %}
+
+{% block title %} 글 번호 : {{article_selected.id}} {% endblock %}
+
+{% block body %}
+<div class="card">
+    <img src="https://picsum.photos/id/{{article_selected.id}}/1000/300" class="card-img-top"
+         alt="lorem picsum random images">
+    <div class="card-body">
+        <h2 class="card-title">{{article_selected.title}}</h2>
+        <p class="card-text">{{article_selected.content}}</p>
+        <a href="{% url 'articles:index' %}" class="btn btn-outline-info">목록</a>
+        <a href="{% url 'articles:update' article_selected.id %}" class="btn btn-outline-warning">수정</a>
+        <a href="{% url 'articles:delete' article_selected.id %}" class="btn btn-outline-danger">삭제</a>
+    </div>
+</div>
+{% endblock %}
