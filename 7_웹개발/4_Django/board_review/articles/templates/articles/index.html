@@ -1,7 +1,28 @@
 {% extends 'articles/base.html' %}
 
-{% block title %} 인덱스 {% endblock %}
+{% block title %} <p>index</p> {% endblock %}
 
 {% block body %}
-<h1>인덱스 테스트</h1>
+<table class="table my-5" >
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Title</th>
+        <th scope="col">User</th>
+        <th scope="col">Date</th>
+        <th scope="col">Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+    <tr>
+        <th scope="row">{{article.id}}</th>
+        <td>{{article.title}}</td>
+        <td>{{article.user}}</td>
+        <td>{{article.date}}</td>
+        <td><a href="{% url 'articles:detail' article.id %}" class="btn btn-primary">본문보기</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

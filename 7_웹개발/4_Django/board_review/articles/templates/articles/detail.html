@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'articles/base.html' %}
+
+{% block title %} {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="card">
+        <img src="https://picsum.photos/1000/200" class="card-img-top">
+        <div class="card-body">
+            <h2 class="card-title">{{article_selected.title}}</h2>
+            <p class="card-text">{{article_selected.content}}</p>
+            <a href="{% url 'articles:index' %}" class="btn btn-primary">목록</a>
+            <a href="{% url 'articles:update' article_selected.id %}" class="btn btn-warning">수정</a>
+            <a href="{% url 'articles:delete' article_selected.id %}" class="btn btn-danger">삭제</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
