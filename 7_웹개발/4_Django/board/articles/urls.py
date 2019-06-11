@@ -20,11 +20,13 @@ urlpatterns = [
     # path('<int:article_id>/edit/', views.edit, name='edit'),
     path('<int:article_id>/update/', views.update, name='update'),
 
+    # READ_comment
+    path('comment_all', views.comment_all, name='comment_all'),
+
     # CREATE_comment
     # articles/5/comments/create
     path('<int:article_id>/comments/create/', views.create_comment, name='create_comment'),
 
     # DELETE_comment
     path('<int:article_id>/comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment')
-
     ]

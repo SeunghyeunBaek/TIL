@@ -7,35 +7,45 @@
     <img src="https://picsum.photos/1000/300" class="card-img-top"
          alt="lorem picsum random images">
     <div class="card-body">
-        <h2 class="card-title">{{article_selected.title}}</h2>
+        <h5 class="card-title">{{article_selected.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{article_selected.user}} - {{article_selected.date}}</h6>
         <p class="card-text">{{article_selected.content}}</p>
         <a href="{% url 'articles:index' %}" class="btn btn-outline-info">목록</a>
         <a href="{% url 'articles:update' article_selected.id %}" class="btn btn-outline-warning">수정</a>
         <a href="{% url 'articles:delete' article_selected.id %}" class="btn btn-outline-danger">삭제</a>
     </div>
 </div>
-<br><br><br>
-<!--댓글 작성-->
-<form action="{% url 'articles:create_comment' article_selected.id %}" method="POST">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="comment">댓글 달기</label>
-        <input type="text" class="form-control" id="comment" name="content"
-               placeholder="키보드 배틀에 참전하세요">
-    </div>
-    <button type="submit" class="btn btn-outline-danger">Let's Fight</button>
-</form>
-<br><br><br>
-{% for comment in article_selected.comment_set.all reversed %}
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">{{comment.id}} 번 댓글</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{comment.user}} - {{comment.date}}</h6>
-        <p class="card-text">{{comment.content}}</p>
-        <a href="{% url 'articles:delete_comment' article_selected.id comment.id %}" class="btn btn-outline-success">삭제 </a>
-    </div>
+
+<div class="my-5">
+    <!--댓글 작성-->
+    <form action="{% url 'articles:create_comment' article_selected.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="comment">댓글 달기</label>
+            <input type="text" class="form-control" id="comment" name="content"
+                   placeholder="키보드 배틀에 참전하세요">
+        </div>
+        <button type="submit" class="btn btn-outline-danger">Let's Fight</button>
+    </form>
 </div>
-{% endfor %}
+
+<div class="mt-5">
+    {% for comment in article_selected.comment_set.all reversed %}
+    <div class="card my-3">
+        <div class="card-body">
+            <h5 class="card-title">{{comment.id}} 번 댓글</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{comment.user}} - {{comment.date}}</h6>
+            <hr>
+            <p class="card-text d-flex justify-content-between">
+                {{comment.content}}
+                <a href="{% url 'articles:delete_comment' article_selected.id comment.id %}"
+                   class="btn btn-outline-success">댓글 삭제</a>
+            </p>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
 <!--댓글확인-->
 
 {% endblock %}

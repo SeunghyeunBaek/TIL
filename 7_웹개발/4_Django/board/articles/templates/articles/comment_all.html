@@ -1,0 +1,23 @@
+{% extends 'articles/base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %}
+<h1>{{user}}'s Fight History</h1>
+{% for comment in user.comment_set.all reversed %}
+<div class="card my-3">
+    <div class="card-body">
+        <h5 class="card-title">{{comment.id}} 번 댓글</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{comment.user}} - {{comment.date}}</h6>
+        <hr>
+        <p class="card-text d-flex justify-content-between">
+            {{comment.content}}
+            <a href="{% url 'articles:delete_comment' comment.article_id comment.id %}"
+               class="btn btn-outline-success">댓글 삭제</a>
+        </p>
+
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
