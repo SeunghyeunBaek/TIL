@@ -6,7 +6,8 @@
     <div class="card">
         <img src="https://picsum.photos/1000/200" class="card-img-top">
         <div class="card-body">
-            <h2 class="card-title">{{article_selected.title}}</h2>
+            <h5 class="card-title">{{article_selected.title}}</h5>
+            <h6> {{article_selected.user}} - {{article_selected.date}}</h6>
             <p class="card-text">{{article_selected.content}}</p>
             <a href="{% url 'articles:index' %}" class="btn btn-primary">목록</a>
             <a href="{% url 'articles:update' article_selected.id %}" class="btn btn-warning">수정</a>
@@ -14,4 +15,28 @@
         </div>
     </div>
 </div>
+
+<div class="my-3">
+    <form action="{% url 'articles:create_comment' article_selected.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="comment">댓글쓰기</label>
+            <input type="text" class="form-control" id="comment" name="content" placeholder="댓글을 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-primary">쓰기</button>
+    </form>
+</div>
+
+
+{% for comment in article_selected.comment_set.all %}
+<div class="card">
+    <div class="card-body">
+        <h6> {{article_selected.user}} - {{article_selected.date}}</h6>
+        <p class="card-text">{{comment.content}}</p>
+        <a href="{% url 'articles:delete_comment' article_selected.id comment.id %}" class="btn btn-danger">삭제</a>
+
+    </div>
+</div>
+<hr>
+{% endfor %}
 {% endblock %}
