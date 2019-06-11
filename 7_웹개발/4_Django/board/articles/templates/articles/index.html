@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for article in articles %}
+    {% for article in articles reversed %}
     <tr>
         <th scope="row">{{article.id}}</th>
         <td>{{article.title|truncatewords:10}}</td>

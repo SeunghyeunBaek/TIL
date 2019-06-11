@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Article, Comment
+from django.utils import timezone
+import lipsum
+from random import randint
 
 # Create your views here.
 
@@ -37,6 +40,17 @@ def create(request):
         return render(request, 'articles/form.html')
 
 
+# CREATE 10 dummies
+def create_dummies(request):
+    lip_obj = lipsum.LipsumGen()
+    for i in range(10):
+        article_dummy = Article()
+        article_dummy.title = lip_obj.bytes(randint(1, 10))
+        article_dummy.content = lip_obj.paras(randint(1, 10))
+        article_dummy.save()
+    return redirect('articles:index')
+
+
 # DELETE
 def delete(request, article_id):
     article_selected = Article.objects.get(id=article_id)
@@ -70,7 +84,9 @@ def update(request, article_id):
 # CREATE_comment
 def create_comment(request, article_id):
     comment_new = Comment()
+    comment_new.user = request.META.get('USERNAME')
     comment_new.content = request.POST.get('content')
+    comment_new.date = timezone.now()
     comment_new.article = Article.objects.get(id=article_id)
     comment_new.save()
     return redirect('articles:detail', article_id)

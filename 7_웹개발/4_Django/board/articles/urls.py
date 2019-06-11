@@ -11,6 +11,7 @@ urlpatterns = [
     # Create
     # path('new/', views.new, name='new'),  # 새글을 쓰기 위한 form 제공
     path('create/', views.create, name='create'),  # DB에 새글 추가
+    path('create_dummies/', views.create_dummies, name='create_dummies'),  # 뻘글 10개 만들기
 
     # Delete
     path('<int:article_id>/delete/', views.delete, name='delete'),

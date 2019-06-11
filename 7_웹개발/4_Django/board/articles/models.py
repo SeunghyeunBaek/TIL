@@ -9,6 +9,9 @@ class Article(models.Model):
 # CASCADE : 폭포
 # on_delete : CASCADE 게시물이 삭제되면 폭포처럼 댓글도 다 지워버린다.
 class Comment(models.Model):
+    user = models.CharField(max_length=50)   # 유저
+    date = models.DateTimeField()   # 날짜
+
     content = models.TextField()  # 댓글
     article = models.ForeignKey(Article, on_delete=models.CASCADE)  # Article Class Foreign Key
 

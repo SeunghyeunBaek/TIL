@@ -26,10 +26,11 @@
     <button type="submit" class="btn btn-outline-danger">Let's Fight</button>
 </form>
 <br><br><br>
-{% for comment in article_selected.comment_set.all %}
+{% for comment in article_selected.comment_set.all reversed %}
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">{{comment.id}} 번 댓글</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{comment.user}} - {{comment.date}}</h6>
         <p class="card-text">{{comment.content}}</p>
         <a href="{% url 'articles:delete_comment' article_selected.id comment.id %}" class="btn btn-outline-success">삭제 </a>
     </div>
