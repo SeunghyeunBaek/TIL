@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="card">
-    <img src="https://picsum.photos/id/{{article_selected.id}}/1000/300" class="card-img-top"
+    <img src="https://picsum.photos/1000/300" class="card-img-top"
          alt="lorem picsum random images">
     <div class="card-body">
         <h2 class="card-title">{{article_selected.title}}</h2>
@@ -14,4 +14,27 @@
         <a href="{% url 'articles:delete' article_selected.id %}" class="btn btn-outline-danger">삭제</a>
     </div>
 </div>
+<br><br><br>
+<!--댓글 작성-->
+<form action="{% url 'articles:create_comment' article_selected.id %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="comment">댓글 달기</label>
+        <input type="text" class="form-control" id="comment" name="content"
+               placeholder="키보드 배틀에 참전하세요">
+    </div>
+    <button type="submit" class="btn btn-outline-danger">Let's Fight</button>
+</form>
+<br><br><br>
+{% for comment in article_selected.comment_set.all %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{comment.id}} 번 댓글</h5>
+        <p class="card-text">{{comment.content}}</p>
+        <a href="{% url 'articles:delete_comment' article_selected.id comment.id %}" class="btn btn-outline-success">삭제 </a>
+    </div>
+</div>
+{% endfor %}
+<!--댓글확인-->
+
 {% endblock %}
