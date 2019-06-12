@@ -1,0 +1,11 @@
+{% extends 'posts/base.html' %}
+
+{% block title %} index {% endblock %}
+
+{% block body %}
+{% for post in posts reversed %}
+    <div class="row">
+        {% include 'posts/_post.html' %}
+    </div>
+{% endfor %}
+{% endblock %}

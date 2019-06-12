@@ -1,0 +1,18 @@
+{% extends 'posts/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %} create {% endblock %}
+
+{% block body %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-outline-primary">저장</button>
+    <a href="{% url 'posts:index' %}">
+        <button class="btn btn-outline-secondary">취소</button>
+    </a>
+    {% endbuttons %}
+</form>
+
+{% endblock %}
