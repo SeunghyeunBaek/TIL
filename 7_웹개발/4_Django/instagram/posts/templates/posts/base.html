@@ -17,8 +17,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="{% url 'posts:create' %}">New <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">My page</a>
+                {% if user.is_authenticated %}
+                <a class="nav-item nav-link active" href="{% url 'posts:create' %}">New<span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                <a class="nav-item nav-link" href="#">{{user}} page</a>
+                {% else %}
+                <a class="nav-item nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+                <a class="nav-item nav-link" href="{% url 'accounts:login' %}">Login</a>
+                {% endif %}
             </div>
         </div>
         <form class="form-inline" action="#">

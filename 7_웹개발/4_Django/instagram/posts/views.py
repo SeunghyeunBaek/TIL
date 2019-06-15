@@ -4,6 +4,7 @@ from .models import Post
 
 
 def index(request):
+    # posts = Post.objects.order_by('-id')
     posts = Post.objects.all()
     context = {
         'posts': posts
@@ -13,7 +14,7 @@ def index(request):
 
 def create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)   # 데이터와 이미지 모두 저장
         if form.is_valid():
             form.save()
             return redirect('posts:index')
