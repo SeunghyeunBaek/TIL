@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required  # 로그인 관련 기능
 from django.shortcuts import render, redirect
 from .forms import PostForm, CommentForm
-from .models import Post
+from .models import Post, Comment
 
 
 def index(request):
@@ -82,12 +82,25 @@ def comment_create(request, post_id):
             return redirect('posts:index')
 
 
-def comment_update(request, post_id, comment_id):
-    pass
-
-
+@login_required
 def comment_delete(request, post_id, comment_id):
-    pass
+    comment_selected = Comment.objects.get(id=comment_id)
+    if request.user == comment_selected.user:
+        comment_selected.delete()
+    return redirect('posts:index')
+
+
+@login_required
+def comment_update(request, post_id, comment_id):
+    comment_selected = Comment(id=comment_id)
+    if request.method == 'POST':
+        pass
+    else:
+        comment_form = CommentForm(data=request.POST, instance=comment_selected)
+    context = {
+        'form': comment_form,
+    }
+    return render(request, 'posts:index')
 
 
 @login_required

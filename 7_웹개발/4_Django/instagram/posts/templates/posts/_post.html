@@ -37,8 +37,13 @@
     <div class="card-body">
         {% for comment in post.comment_set.all reversed %}
         <p><strong>{{comment.user.username}}</strong>: {{comment.content}}</p>
+        {% if user == comment.user %}
+        <a href="{% url 'posts:comment_delete' post.id comment.id %}">
+            <button type="button" class="btn btn-outline-danger">댓글 삭제</button>
+        </a>
+        {% endif %}
         {% empty %}
-        <p>악플보다 잔인한건 무플</p>
+        <p>==악플보다 잔인한건 무플==</p>
         {% endfor %}
     </div>
     <!--    댓글 출력 끝 -->
