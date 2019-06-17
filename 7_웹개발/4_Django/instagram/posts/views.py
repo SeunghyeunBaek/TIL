@@ -90,6 +90,19 @@ def comment_delete(request, post_id, comment_id):
     pass
 
 
+@login_required
+def likes(request, post_id):
+    user = request.user  # 좋아요을 누른 사용자
+    post = Post.objects.get(id=post_id)  # 좋아한 게시물
+    if user in post.like_users.all():
+        # 이미 좋아요가 눌린 게시물일 경우 => 좋아요 취소
+        post.like_users.remove(user)
+    else:
+        # 좋아요를 누르지 않은 경우 => 좋아요 추가
+        post.like_users.add(user)
+    return redirect('posts:index')
+
+
 # def create(request):
 #     # 1. if request.method is GET, request Form
 #     # 4. if request.method is POST,
