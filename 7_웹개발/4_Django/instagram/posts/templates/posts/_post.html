@@ -1,3 +1,4 @@
+{% load bootstrap4 %}
 <div class="card col-6 my-3">
     {% if post.image %}
     <img src="{{ post.image.url }}" class="card-img-top" alt="...">
@@ -5,14 +6,33 @@
     <img src="https://picsum.photos/id/{{ post.id }}/400/250/." class="card-img-top" alt="...">
     {% endif %}
     <div class="card-body">
-        <!--    <h5 class="card-title">Card title</h5>-->
+        <h6 class="card-subtitle mb-2 text-muted">작성자: {{user}}</h6>
         <p class="card-text">{{post.content}}</p>
+        {% if post.user == user %}
         <a href="{% url 'posts:update' post.id %}">
             <button type="button" class="btn btn-outline-warning">수정</button>
         </a>
         <a href="{% url 'posts:delete' post.id %}">
             <button type="button" class="btn btn-outline-danger">삭제</button>
         </a>
-        <!--    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+        {% endif %}
     </div>
+<!--    댓글 출력 시작-->
+    <div class="card-body">
+        {% for comment in post.comment_set.all reversed %}
+        <p><strong>{{comment.user.username}}</strong>: {{comment.content}}</p>
+        {% empty %}
+        <p>악플보다 잔인한건 무플</p>
+        {% endfor %}
+    </div>
+<!--    댓글 출력 끝 -->
+<!--    댓글 폼 시작 -->
+    <div class="card-body">
+        <form action="{% url 'posts:comment_create' post.id %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input type="submit" class="btn btn-outline-primary" value="참전">
+        </form>
+    </div>
+<!--    댓글 폼 끝 -->
 </div>

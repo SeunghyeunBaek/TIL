@@ -3,10 +3,11 @@
 
 {% block title %} signup {% endblock %}
 {% block body %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="btn btn-outline-primary" value="로그인">
-        <a href="" class="btn btn-outline-secondary">취소</a>
-    </form>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-outline-primary" value="로그인">
+    <a href="{% url 'accounts:signup' %}" class="btn btn-outline-success">회원가입</a>
+    <a href="{% url 'posts:index' %}" class="btn btn-outline-secondary">취소</a>
+</form>
 {% endblock %}
