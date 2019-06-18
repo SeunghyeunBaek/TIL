@@ -14,4 +14,5 @@ urlpatterns = [
     # TODO path('<int:post_id>/comments/<int:comment:id>/update/', views.comment_update, name='comment_update'),  # 댓글 수정 UPDATE
 
     path('<int:post_id>/likes/', views.likes, name='likes'),  # on-off 좋아요가 눌려있으면 취소, 안눌려있으면 누름
+
 ]

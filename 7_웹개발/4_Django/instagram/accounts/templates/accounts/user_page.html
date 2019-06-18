@@ -1,0 +1,45 @@
+{% extends 'posts/base.html' %}
+
+{% block title %} user_page {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-4 d-flex justify-content-center">
+        <!--프로필 이미지-->
+        <img src="https://picsum.photos/id/{{user_selected.id}}/200/" class="rounded-circle">
+    </div>
+    <div class="col-8">
+        <!--기타 정보-->
+        <h2>{{user_selected.username}}</h2>
+        {% if user != user_selected %}
+        <a href="{% url 'accounts:follow' user_selected.id %}">
+            {% if user in user_selected.follower.all %}
+            <button type="button" class="btn btn-outline-danger">팔로우 취소 <i class="far fa-thumbs-down"></i></button>
+            {% else %}
+            <button type="button" class="btn btn-outline-danger">팔로우 <i class="far fa-thumbs-up"></i></button>
+            {% endif %}
+        </a>
+        {% endif %}
+        <div class="d-flex align-items">
+            <ul>
+                <li><strong>그를 따르는 자들: {{user_selected.follower.count }}인</strong></li>
+                {% for follower in user_selected.follower.all %}
+                {{follower.username}},
+                {% endfor %}
+                <li><strong>그가 따르는 자들: {{user_selected.follow.count}}인</strong></li>
+                {% for follow in user_selected.follow.all %}
+                {{follow.username}},
+                {% endfor %}
+                <li><strong>게시글 수: {{user_selected.post_set.count}}</strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card-columns">
+    {% for post in user_selected.post_set.all %}
+    {% include 'posts/_post.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

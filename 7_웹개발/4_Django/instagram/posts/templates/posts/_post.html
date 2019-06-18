@@ -1,60 +1,72 @@
 {% load bootstrap4 %}
+
+{% if request.resolver_match.url_name == 'index' %}
 <div class="card col-6 my-3">
-    {% if post.image %}
-    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
-    {% else %}
-    <img src="https://picsum.photos/id/{{ post.id }}/400/250/." class="card-img-top" alt="...">
-    {% endif %}
-    <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted">작성자: {{post.user}}</h6>
-        <p>{{post.like_users.count}} 명이 좋아합니다</p>
-        <hr>
-        <p>이 글에 좋아요를 누른 유저</p>
-        {% for user in post.like_users.all %}
-        <p>{{user}}</p>
-        {% endfor %}
-        <hr>
-        <p class="card-text">{{post.content}}</p>
-        {% if post.user == user %}
-        <a href="{% url 'posts:update' post.id %}">
-            <button type="button" class="btn btn-outline-warning">수정</button>
-        </a>
-        <a href="{% url 'posts:delete' post.id %}">
-            <button type="button" class="btn btn-outline-danger">삭제</button>
-        </a>
-        {% endif %}
-    </div>
-    <!--    좋아요 버튼 시작 -->
-    <div class="card-body">
-        {% if user in post.like_users.all %}
-        <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart-broken"></i></a>
+{% else %}
+<div class="card my-3">
+{% endif %}
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" alt="...">
         {% else %}
-        <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart"></i></a>
+        <img src="https://picsum.photos/id/{{ post.id }}/400/250/." class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted"><a href="{% url 'accounts:user_page' post.user.id %}">{{post.user}}</a>
+            </h6>
+            <p>{{post.like_users.count}} 명이 좋아합니다</p>
+            <hr>
+            <p>이 글에 좋아요를 누른 유저</p>
+            <p>
+                {% for user in post.like_users.all %}
+                <strong>{{user}},</strong>
+                {% endfor %}
+            </p>
+
+            <hr>
+            <p class="card-text">{{post.content}}</p>
+            {% if post.user == user %}
+            <a href="{% url 'posts:update' post.id %}">
+                <button type="button" class="btn btn-outline-warning">수정</button>
+            </a>
+            <a href="{% url 'posts:delete' post.id %}">
+                <button type="button" class="btn btn-outline-danger">삭제</button>
+            </a>
+            {% endif %}
+        </div>
+        <!--    좋아요 버튼 시작 -->
+        <div class="card-body">
+            {% if user in post.like_users.all %}
+            <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart-broken"></i></a>
+            {% else %}
+            <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart"></i></a>
+            {% endif %}
+        </div>
+        <!--    좋아요 버튼 끝 -->
+        <!-- posts:index 에서 요청했을 때만 출력 -->
+        {% if request.resolver_match.url_name == 'index' %}
+        <!--    댓글 출력 시작-->
+        <div class="card-body">
+            {% for comment in post.comment_set.all reversed %}
+            <p><strong>{{comment.user.username}}</strong>: {{comment.content}}</p>
+            {% if user == comment.user %}
+            <a href="{% url 'posts:comment_delete' post.id comment.id %}">
+                <button type="button" class="btn btn-outline-danger">댓글 삭제</button>
+            </a>
+            {% endif %}
+            {% empty %}
+            <p>==악플보다 잔인한건 무플==</p>
+            {% endfor %}
+        </div>
+        <!--    댓글 출력 끝 -->
+        <!--    댓글 폼 시작 -->
+        <div class="card-body">
+            <form action="{% url 'posts:comment_create' post.id %}" method="POST">
+                {% csrf_token %}
+                {# bootstrap_form comment_form #}
+                {% bootstrap_field comment_form.content show_label=False %}
+                <input type="submit" class="btn btn-outline-primary" value="참전">
+            </form>
+        </div>
+        <!--    댓글 폼 끝 -->
         {% endif %}
     </div>
-    <!--    좋아요 버튼 끝 -->
-    <!--    댓글 출력 시작-->
-    <div class="card-body">
-        {% for comment in post.comment_set.all reversed %}
-        <p><strong>{{comment.user.username}}</strong>: {{comment.content}}</p>
-        {% if user == comment.user %}
-        <a href="{% url 'posts:comment_delete' post.id comment.id %}">
-            <button type="button" class="btn btn-outline-danger">댓글 삭제</button>
-        </a>
-        {% endif %}
-        {% empty %}
-        <p>==악플보다 잔인한건 무플==</p>
-        {% endfor %}
-    </div>
-    <!--    댓글 출력 끝 -->
-    <!--    댓글 폼 시작 -->
-    <div class="card-body">
-        <form action="{% url 'posts:comment_create' post.id %}" method="POST">
-            {% csrf_token %}
-            {# bootstrap_form comment_form #}
-            {% bootstrap_field comment_form.content show_label=False %}
-            <input type="submit" class="btn btn-outline-primary" value="참전">
-        </form>
-    </div>
-    <!--    댓글 폼 끝 -->
-</div>
