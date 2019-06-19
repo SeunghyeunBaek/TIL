@@ -1,0 +1,13 @@
+{% extends 'posts/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %} signup {% endblock %}
+{% block body %}
+<!--그림 파일 저장 enctype-->
+<form action="{% url 'accounts:update' user_selected.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-outline-primary" value="수정">
+    <a href="{% url 'accounts:user_page' user_selected.id %}" class="btn btn-outline-secondary">취소</a>
+</form>
+{% endblock %}

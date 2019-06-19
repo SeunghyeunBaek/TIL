@@ -1,5 +1,5 @@
-from imagekit.models import ProcessedImageField
 # https://github.com/matthewwithanm/django-imagekit
+from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 from django.db import models

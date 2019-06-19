@@ -2,11 +2,28 @@ from django.contrib.auth.decorators import login_required  # 로그인 관련 �
 from django.shortcuts import render, redirect
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
+from itertools import chain
 
 
-def index(request):
+def all(request):
     # posts = Post.objects.order_by('-id')
     posts = Post.objects.all()
+    comment_form = CommentForm()
+    context = {
+        'posts': posts,
+        'comment_form': comment_form,
+    }
+    return render(request, 'posts/index.html', context)
+
+
+@login_required
+def index(request):
+    # posts = Post.objects.order_by('-id')
+    # 내가 팔로우 한 사람의 글만 피드
+    user_login = request.user
+    user_follow = user_login.follow.all()
+    follow_list = chain(user_follow, [request.user])  # user_follow + user
+    posts = Post.objects.filter(user__in=follow_list)  # user 가 팔로우 하는 사람만 출력
     comment_form = CommentForm()
     context = {
         'posts': posts,

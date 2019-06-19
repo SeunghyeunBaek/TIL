@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login as auth_login
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth import logout as auth_logout
-from .forms import CustomUserCreationForm
+from django.contrib.auth import login as auth_login
+from django.shortcuts import render, redirect
 from .models import User
 
 
@@ -47,11 +48,13 @@ def login(request):
         return render(request, 'accounts/login.html', context)
 
 
+@login_required
 def logout(request):
     auth_logout(request)
     return redirect('posts:index')
 
 
+@login_required
 def user_page(request, user_id):
     user_selected = User.objects.get(id=user_id)
     context = {
@@ -60,6 +63,7 @@ def user_page(request, user_id):
     return render(request, 'accounts/user_page.html', context)
 
 
+@login_required
 def follow(request, user_id):
     user_following = request.user  # 팔로우를 누르는 유저, username
     user_followed = User.objects.get(id=user_id)  # 팔로우 당하는 유저
@@ -81,3 +85,24 @@ def follow(request, user_id):
     return redirect('accounts:user_page', user_id)
 
 
+@login_required
+def update(request, user_id):
+    user_selected = User.objects.get(id=user_id)
+    if request.user == user_selected:  # 로그인 한 사람과 수정하려는 사람이 같을 때
+        if request.method == 'POST':
+            form = CustomUserChangeForm(data=request.POST, files=request.FILES, instance=user_selected)
+            if form.is_valid():
+                form.save()
+                return redirect('accounts:user_page', user_id)
+            else:
+                pass
+        else:
+            form = CustomUserChangeForm(instance=user_selected)
+        context = {
+            'form': form,
+            'user_selected': user_selected,
+        }
+        return render(request, 'accounts/update.html', context)
+    else:
+        # 로그인 한 사람과 수정하려는 사람이 같지 않을 경우 index 페이지 리턴
+        return redirect('accounts:user_page', user_id)

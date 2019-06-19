@@ -1,5 +1,6 @@
 {% extends 'posts/base.html' %}
 {% load bootstrap4 %}
+{% load socialaccount %}
 
 {% block title %} signup {% endblock %}
 {% block body %}
@@ -10,4 +11,5 @@
     <a href="{% url 'accounts:signup' %}" class="btn btn-outline-success">회원가입</a>
     <a href="{% url 'posts:index' %}" class="btn btn-outline-secondary">취소</a>
 </form>
+<a href="{% provider_login_url 'kakao' %}" class="btn btn-outline-warning">카카오 계정으로 로그인</a>
 {% endblock %}

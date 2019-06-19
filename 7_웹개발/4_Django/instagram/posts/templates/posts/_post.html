@@ -1,7 +1,7 @@
 {% load bootstrap4 %}
 
 {% if request.resolver_match.url_name == 'index' %}
-<div class="card col-6 my-3">
+<div class="card my-3">
 {% else %}
 <div class="card my-3">
 {% endif %}
@@ -43,7 +43,7 @@
         </div>
         <!--    좋아요 버튼 끝 -->
         <!-- posts:index 에서 요청했을 때만 출력 -->
-        {% if request.resolver_match.url_name == 'index' %}
+        {% if request.resolver_match.url_name == 'all' %}
         <!--    댓글 출력 시작-->
         <div class="card-body">
             {% for comment in post.comment_set.all reversed %}
@@ -70,3 +70,4 @@
         <!--    댓글 폼 끝 -->
         {% endif %}
     </div>
+
