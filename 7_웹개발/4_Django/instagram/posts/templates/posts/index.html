@@ -3,6 +3,13 @@
 {% block title %} index {% endblock %}
 
 {% block body %}
+{% if request.resolver_match.url_name == 'index' %}
+    <h1>인덱스</h1>
+{% elif request.resolver.match.url_name == 'all' %}d
+    <h1>전체 게시글</h1>
+{% else %}
+    <h1>{{hash_tag.content}}</h1>
+{% endif %}
 <div class="card-columns">
     {% for post in posts reversed %}
     {% include 'posts/_post.html' %}

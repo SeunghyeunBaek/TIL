@@ -15,6 +15,11 @@ urlpatterns = [
     path('<int:post_id>/comments/<int:comment_id>/delete/', views.comment_delete, name='comment_delete'),  # 댓글 삭제 DELETE
     # TODO path('<int:post_id>/comments/<int:comment:id>/update/', views.comment_update, name='comment_update'),  # 댓글 수정 UPDATE
 
+    # like
     path('<int:post_id>/likes/', views.likes, name='likes'),  # on-off 좋아요가 눌려있으면 취소, 안눌려있으면 누름
+    # hash_tag
+    path('hash_tags/<int:hash_tag_id>/', views.hash_tags, name='hash_tags'),
+    # javascript test
+    path('test/', views.javascript, name='javascript')
 
 ]

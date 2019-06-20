@@ -1,10 +1,11 @@
 {% load bootstrap4 %}
+{% load posts_templatetag %}
 
 {% if request.resolver_match.url_name == 'index' %}
 <div class="card my-3">
-{% else %}
-<div class="card my-3">
-{% endif %}
+    {% else %}
+    <div class="card my-3">
+        {% endif %}
         {% if post.image %}
         <img src="{{ post.image.url }}" class="card-img-top" alt="...">
         {% else %}
@@ -13,7 +14,9 @@
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted"><a href="{% url 'accounts:user_page' post.user.id %}">{{post.user}}</a>
             </h6>
-            <p>{{post.like_users.count}} 명이 좋아합니다</p>
+
+            <p><span id="like-counts-{{post.id}}">{{post.like_users.count}}</span> 명이 좋아합니다</p>
+
             <hr>
             <p>이 글에 좋아요를 누른 유저</p>
             <p>
@@ -23,7 +26,7 @@
             </p>
 
             <hr>
-            <p class="card-text">{{post.content}}</p>
+            <p class="card-text">{{post|hash_tag_link|safe}}</p>
             {% if post.user == user %}
             <a href="{% url 'posts:update' post.id %}">
                 <button type="button" class="btn btn-outline-warning">수정</button>
@@ -36,9 +39,9 @@
         <!--    좋아요 버튼 시작 -->
         <div class="card-body">
             {% if user in post.like_users.all %}
-            <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart-broken"></i></a>
+            <i style="color:#ed4956" data-id="{{post.id}}" class="fas fa-heart-broken"></i>
             {% else %}
-            <a href="{% url 'posts:likes' post.id %}"><i style="color:#ed4956" class="fas fa-heart"></i></a>
+            <i style="color:#ed4956" data-id="{{post.id}}" class="fas fa-heart"></i>
             {% endif %}
         </div>
         <!--    좋아요 버튼 끝 -->
@@ -48,6 +51,7 @@
         <div class="card-body">
             {% for comment in post.comment_set.all reversed %}
             <p><strong>{{comment.user.username}}</strong>: {{comment.content}}</p>
+
             {% if user == comment.user %}
             <a href="{% url 'posts:comment_delete' post.id comment.id %}">
                 <button type="button" class="btn btn-outline-danger">댓글 삭제</button>

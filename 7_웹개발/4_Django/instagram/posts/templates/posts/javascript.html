@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="me">
+
+</div>
+<button id="my-button">눌러</button>
+<script>
+    const button = document.querySelector('#my-button')
+    button.addEventListener('click', e => {
+        const div = document.querySelector('#me')
+        div.innerText = '하이하이'
+    })
+</script>
+</body>
+</html>

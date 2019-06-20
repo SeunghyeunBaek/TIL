@@ -41,7 +41,6 @@
     {% endblock %}
 </div>
 
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -51,5 +50,37 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<!--axios-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!--Like javascript-->
+<script>
+    const like_buttons = document.querySelectorAll('.fas')
+    const n_likes = document.querySelectorAll('#n_likes')
+
+    like_buttons.forEach(function(button){
+        button.addEventListener('click', e => {
+                const post_id = e.target.dataset.id
+                axios.get(`/posts/${post_id}/likes/`)
+                .then(function(response){
+                        const like_count = document.querySelector(`#like-counts-${post_id}`)
+                        like_count.innerText = response.data.like_count
+                        if(response.data.is_like){
+                            e.target.classList.remove('fa-heart')
+                            e.target.classList.add('fa-heart-broken')
+                            e.target.style.color = 'black'
+                        }
+                        else{
+                            e.target.classList.remove('fa-heart-broken')
+                            e.target.classList.add('fa-heart')
+                            e.target.style.color = 'red'
+                        }
+                    })
+              })
+        })
+
+</script>
+
+
 </body>
 </html>
