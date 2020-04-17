@@ -4,7 +4,8 @@
 
 *references*
 
-* *[생활코딩](https://opentutorials.org/course/228/4894)*
+* [생활코딩](https://opentutorials.org/course/228/4894)
+* [초보몽키의 개발블로그](https://wayhome25.github.io/cs/2018/03/11/ssl-https/)
 
 ## 1. 용어
 
@@ -41,7 +42,7 @@
 
 ## 2. HTTP vs HTTPS
 
-![SSL/TLS Protocol Layers - SSL/TLS Overview](https://sites.google.com/site/tlsssloverview/_/rsrc/1337752119392/ssl-tls-protocol-layers/ssllayers.gif)
+![views](https://i.imgur.com/4GHgl0T.png)
 
 HTTP 는 SSL 레이어 위에서 동작, SSL을 사용하는 HTTP 를 HTTPS 라고 한다.
 
@@ -112,6 +113,10 @@ CA는 자신의 private key를 이용해 인증서를 암호화, 브라우저는
 * public key
   * public key 암호화 방법
 
+
+
+
+
 #### 서버 신뢰도 입증 과정
 
 1. 클라이언트가 서버에 접속 요청
@@ -129,6 +134,8 @@ CA는 자신의 private key를 이용해 인증서를 암호화, 브라우저는
 발/수신 데이터는 대칭키 방식으로 암호화
 
 ## 4. SSL 통신과정
+
+![views](https://i.imgur.com/YIfy1wK.png)
 
 발/수신 데이터는 대칭키로 암호화, 암호화할 때 사용한 대칭키는 공개키로 암호화
 
@@ -180,6 +187,31 @@ SSL통신에서는 악수 과정에서 SSL인증서와 공개키를 주고 받�
 ### 3) 세션종료
 
 * session key 폐기
+
+## 5 인증서 발급
+
+## 6 인증서 구입
+
+## 7 웹서버에 인증서 설치
+
+```bash
+# 인증서 파일목록
+
+ssl.key  # 비밀키
+ssl.crt  # 인증서
+ca.pem  # Root CA 인증서
+sub.class1.server.ca.pem  # 중계 인증서
+
+
+```
+
+
+
+
+
+
+
+
 
 
 
