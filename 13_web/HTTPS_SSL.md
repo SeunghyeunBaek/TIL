@@ -257,7 +257,7 @@ if __name__ == '__main__':
 
 ### Client
 
-* `verify = False` 를 해야 `bad handshake`오류 무시
+* `verify = False`: `bad handshake`오류 무시
 
 ```python
 import requests
