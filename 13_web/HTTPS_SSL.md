@@ -6,6 +6,7 @@
 
 * [생활코딩](https://opentutorials.org/course/228/4894)
 * [초보몽키의 개발블로그](https://wayhome25.github.io/cs/2018/03/11/ssl-https/)
+* [miguelgrinberg.com](https://blog.miguelgrinberg.com/post/running-your-flask-application-over-https)
 
 ## 1. 용어
 
@@ -192,17 +193,81 @@ SSL통신에서는 악수 과정에서 SSL인증서와 공개키를 주고 받�
 
 ## 6 인증서 구입
 
-## 7 웹서버에 인증서 설치
-
 ```bash
-# 인증서 파일목록
-
 ssl.key  # 비밀키
 ssl.crt  # 인증서
 ca.pem  # Root CA 인증서
 sub.class1.server.ca.pem  # 중계 인증서
+```
 
+## 7 웹서버에 인증서 설치
 
+### 인증서 만들기
+
+* rsa: 4096: 4096 bit 길이의 rsa 비밀키
+* days: 유효 기간
+
+```bash
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout private_key.pem -days 365
+```
+
+```bash
+Generating a 4096 bit RSA private key
+......................++
+.............++
+writing new private key to 'key.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]: KR
+State or Province Name (full name) [Some-State]: Seoul
+Locality Name (eg, city) []: Gangnam
+Organization Name (eg, company) [Internet Widgits Pty Ltd]: MINDS AND COMPANY
+Organizational Unit Name (eg, section) []: 
+Common Name (e.g. server FQDN or YOUR name) []: BAEK
+Email Address []: shbaek@mindslab.ai
+```
+
+* 생성파일
+  * private_key.pem: 비밀키
+  * cert.pem: 인증서
+
+### FLASK
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return("You called the service with https")
+
+cert_dir = 'cert/'
+
+if __name__ == '__main__':
+    app.run(ssl_context=(cert_dir+'cert.pem', cert_dir+'private_key.pem'))
+    
+# flask run --cert=cert/cert.pem --key=key.pem 
+```
+
+### Client
+
+* `verify = False` 를 해야 `bad handshake`오류 무시
+
+```python
+import requests
+
+url = 'https://127.0.0.1:5000/'
+res = requests.get(url, verify=False)
+
+print(res.text)
+
+### You called the service with https
 ```
 
 
